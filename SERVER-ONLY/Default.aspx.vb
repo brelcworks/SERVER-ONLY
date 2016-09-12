@@ -13,7 +13,7 @@ Public Class _Default
     Private streamWriter As StreamWriter
     Private CT As Integer = 0
     Private ct1 As Integer = 0
-    Private ct2 As Integer = 0
+    Private ct2 As String
     Private ISCOM As Boolean = True
     Private dlybln As Boolean = True
     Private AD As Boolean = False
@@ -43,7 +43,7 @@ Public Class _Default
             EXLERR(Now.ToString, ex.ToString)
         End Try
         Try
-            If ct2 = 7 Then
+            If ct2 = "07" Then
                 If dlybln = False Then
                     AD = False
                     DLYRPT()
@@ -1290,5 +1290,6 @@ Public Class _Default
 
     Private Sub btn1_Click(sender As Object, e As EventArgs) Handles btn1.Click
         dlybln = False
+        ERR.Text = "return to false"
     End Sub
 End Class
