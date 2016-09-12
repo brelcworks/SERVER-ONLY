@@ -21,6 +21,7 @@
                         <asp:Label ID="ERR" runat="server" ForeColor="Blue"></asp:Label>
                         <br />
                         <asp:Label ID="CTSTA" runat="server"></asp:Label>
+                        <asp:Button ID="btn1" runat="server" Text="btn" />
                     </div>
                     <asp:Timer ID="Timer1" runat="server" Interval="1000">
                     </asp:Timer>

@@ -13,7 +13,9 @@ Public Class _Default
     Private streamWriter As StreamWriter
     Private CT As Integer = 0
     Private ct1 As Integer = 0
+    Private ct2 As Integer = 0
     Private ISCOM As Boolean = True
+    Private dlybln As Boolean = True
     Private AD As Boolean = False
     Private LP As Boolean = False
     Private LP1 As Boolean = False
@@ -29,6 +31,7 @@ Public Class _Default
     Protected Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Dim ss As Integer = Now.ToString("HH") * 60 * 60 + Now.ToString("mm") * 60 + Now.ToString("ss")
         Dim ss1 As Integer = Now.ToString("ss")
+        ct2 = Now.ToString("HH")
         CT = ss1
         ct1 = ss1
         Try
@@ -40,10 +43,11 @@ Public Class _Default
             EXLERR(Now.ToString, ex.ToString)
         End Try
         Try
-            If CT = 35 Then
-                Timer1.Enabled = False
-                AD = False
-                DLYRPT()
+            If ct2 = 7 Then
+                If dlybln = False Then
+                    AD = False
+                    DLYRPT()
+                End If
             End If
         Catch ex As Exception
             EXLERR(Now.ToString, ex.ToString)
@@ -699,7 +703,7 @@ Public Class _Default
                 EXLERR(Now.ToString, "DAILY REPORT SENT")
                 ERR.Text = "DAILY REPORT SENT"
                 AD = True
-                Timer1.Enabled = True
+                dlybln = True
             Catch ex As Exception
                 AD = False
                 EXLERR(Now.ToString, ex.ToString)
@@ -1282,5 +1286,9 @@ Public Class _Default
     End Function
     Protected Sub err_display(ByVal msg As String)
         ERR.Text = msg
+    End Sub
+
+    Private Sub btn1_Click(sender As Object, e As EventArgs) Handles btn1.Click
+        dlybln = False
     End Sub
 End Class
