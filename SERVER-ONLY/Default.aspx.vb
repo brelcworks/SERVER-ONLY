@@ -41,6 +41,7 @@ Public Class _Default
         End Try
         Try
             If CT = 35 Then
+                Timer1.Enabled = False
                 AD = False
                 DLYRPT()
             End If
@@ -698,6 +699,7 @@ Public Class _Default
                 EXLERR(Now.ToString, "DAILY REPORT SENT")
                 ERR.Text = "DAILY REPORT SENT"
                 AD = True
+                Timer1.Enabled = True
             Catch ex As Exception
                 AD = False
                 EXLERR(Now.ToString, ex.ToString)
