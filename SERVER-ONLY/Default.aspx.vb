@@ -32,7 +32,7 @@ Public Class _Default
         CT = ss1
         ct1 = ss1
         Try
-            If CT = 86000 Then
+            If CT = 25 Then
                 ISCOM = False
                 hr_bck()
             End If
@@ -40,7 +40,7 @@ Public Class _Default
             EXLERR(Now.ToString, ex.ToString)
         End Try
         Try
-            If CT = 85000 Then
+            If CT = 35 Then
                 AD = False
                 DLYRPT()
             End If
@@ -56,8 +56,8 @@ Public Class _Default
             EXLERR(Now.ToString, ex.ToString)
         End Try
         Try
-            If CT = 86100 Then
-                If IsLastDay(Today()) = True Then
+            If CT = 45 Then
+                If IsLastDay(Today()) = False Then
                     LP1 = False
                     MON_REP()
                 End If
@@ -264,6 +264,7 @@ Public Class _Default
                 ISCOM = True
             Catch ex As Exception
                 EXLERR(Now.ToString, ex.ToString)
+                err_display(ex.ToString)
                 ISCOM = False
             End Try
         Loop
@@ -700,6 +701,7 @@ Public Class _Default
             Catch ex As Exception
                 AD = False
                 EXLERR(Now.ToString, ex.ToString)
+                err_display(ex.ToString)
             End Try
         Loop
     End Sub
@@ -875,6 +877,7 @@ Public Class _Default
             Catch ex As Exception
                 LP = False
                 EXLERR(Now.ToString, ex.ToString)
+                err_display(ex.ToString)
             End Try
         Loop
     End Sub
@@ -1268,11 +1271,14 @@ Public Class _Default
             Catch ex As Exception
                 LP1 = False
                 EXLERR(Now.ToString, ex.ToString)
+                err_display(ex.ToString)
             End Try
         Loop
     End Sub
     Function IsLastDay(ByVal myDate As Date) As Boolean
         Return myDate.Day = Date.DaysInMonth(myDate.Year, myDate.Month)
     End Function
-
+    Protected Sub err_display(ByVal msg As String)
+        ERR.Text = msg
+    End Sub
 End Class
