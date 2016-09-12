@@ -48,7 +48,7 @@ Public Class _Default
             EXLERR(Now.ToString, ex.ToString)
         End Try
         Try
-            If CT = 85500 Then
+            If CT = 20 Then
                 LP = False
                 rmtrckr()
             End If
@@ -56,8 +56,8 @@ Public Class _Default
             EXLERR(Now.ToString, ex.ToString)
         End Try
         Try
-            If CT = 20 Then
-                If IsLastDay(Today()) = False Then
+            If CT = 86100 Then
+                If IsLastDay(Today()) = True Then
                     LP1 = False
                     MON_REP()
                 End If
