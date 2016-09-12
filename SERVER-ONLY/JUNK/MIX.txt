@@ -1,0 +1,189 @@
+﻿Dim book As Workbook = New Workbook()
+                book.LoadFromFile(excelfile1)
+                Dim sheet As Worksheet = book.Worksheets("CPT")
+                Dim chart As Chart = sheet.Charts.Add(ExcelChartType.ColumnClustered)
+                Dim l_COL As String = ChrW((Val(sheet.LastColumn.ToString) - 2) + 65)
+                Dim l_ROW As Integer = Val(sheet.LastRow.ToString) - 1
+
+                chart.DataRange = sheet.Range("b5:" & l_COL & l_ROW)
+                chart.SeriesDataFromRange = False
+                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
+                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
+                chart.LeftColumn = Val(sheet.LastColumn.ToString) + 2
+                chart.TopRow = 5
+                chart.RightColumn = 19
+                chart.BottomRow = 24
+                chart.ChartTitle = "CPT FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
+                chart.ChartTitleArea.Font.FontName = "Calibri"
+                chart.ChartTitleArea.Font.Size = 13
+                chart.ChartTitleArea.Font.IsBold = True
+                chart.PrimaryCategoryAxis.Title = "CUSTOMERS"
+                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
+                chart.PrimaryValueAxis.Title = "COMPLAINTS"
+                chart.PrimaryValueAxis.HasMajorGridLines = False
+                chart.PrimaryValueAxis.MaxValue = 50
+                chart.PrimaryValueAxis.TitleArea.TextRotationAngle = 90
+                chart.Legend.Position = LegendPositionType.Right
+
+                sheet = book.Worksheets("SERVICE")
+                chart = sheet.Charts.Add(ExcelChartType.ColumnClustered)
+                l_COL = ChrW((Val(sheet.LastColumn.ToString) - 2) + 65)
+                l_ROW = Val(sheet.LastRow.ToString) - 1
+
+                chart.DataRange = sheet.Range("b5:" & l_COL & l_ROW)
+                chart.SeriesDataFromRange = False
+                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
+                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
+                chart.LeftColumn = Val(sheet.LastColumn.ToString) + 2
+                chart.TopRow = 5
+                chart.RightColumn = 19
+                chart.BottomRow = 24
+                chart.ChartTitle = "SERVICE FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
+                chart.ChartTitleArea.Font.FontName = "Calibri"
+                chart.ChartTitleArea.Font.Size = 13
+                chart.ChartTitleArea.Font.IsBold = True
+                chart.PrimaryCategoryAxis.Title = "CUSTOMERS"
+                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
+                chart.PrimaryValueAxis.Title = "SERVICES"
+                chart.PrimaryValueAxis.HasMajorGridLines = True
+                chart.PrimaryValueAxis.MaxValue = 20
+                chart.PrimaryValueAxis.TitleArea.TextRotationAngle = 90
+                chart.Legend.Position = LegendPositionType.Right
+
+                sheet = book.Worksheets("SLA")
+                chart = sheet.Charts.Add(ExcelChartType.ColumnClustered)
+                chart.DataRange = sheet.Range("b3:E5")
+                chart.SeriesDataFromRange = False
+                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
+                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
+                chart.LeftColumn = 2
+                chart.TopRow = 7
+                chart.RightColumn = 6
+                chart.BottomRow = 20
+                chart.ChartTitle = "SLA FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
+                chart.ChartTitleArea.Font.FontName = "Calibri"
+                chart.ChartTitleArea.Font.Size = 10.5
+                chart.ChartTitleArea.Font.IsBold = True
+                chart.PrimaryValueAxis.HasMajorGridLines = True
+                chart.PrimaryValueAxis.MaxValue = 5
+                chart.Legend.Position = LegendPositionType.Right
+
+                sheet = book.Worksheets("DASHBOARD")
+                chart = sheet.Charts.Add(ExcelChartType.Column3DClustered)
+
+                chart.DataRange = sheet.Range("p8:r9")
+                chart.SeriesDataFromRange = False
+                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
+                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
+                chart.LeftColumn = 9
+                chart.TopRow = 2
+                chart.RightColumn = 15
+                chart.BottomRow = 11
+                chart.ChartTitle = "CPT FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
+                chart.ChartTitleArea.Font.FontName = "Calibri"
+                chart.ChartTitleArea.Font.Size = 10.5
+                chart.ChartTitleArea.Font.IsBold = True
+                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
+                chart.PrimaryValueAxis.HasMajorGridLines = True
+                chart.PrimaryValueAxis.MaxValue = AMC_CON + 1
+                chart.Legend.Position = LegendPositionType.Right
+
+                chart = sheet.Charts.Add(ExcelChartType.Column3DClustered)
+                chart.DataRange = sheet.Range("p3:s5")
+                chart.SeriesDataFromRange = False
+                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
+                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
+                chart.LeftColumn = 2
+                chart.TopRow = 2
+                chart.RightColumn = 8
+                chart.BottomRow = 11
+                chart.ChartTitle = "SLA FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
+                chart.ChartTitleArea.Font.FontName = "Calibri"
+                chart.ChartTitleArea.Font.Size = 10.5
+                chart.ChartTitleArea.Font.IsBold = True
+                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
+                chart.PrimaryValueAxis.HasMajorGridLines = True
+                chart.PrimaryValueAxis.MaxValue = MINOR_COM + MAJOR_COM + 1
+                chart.Legend.Position = LegendPositionType.Right
+
+                chart = sheet.Charts.Add(ExcelChartType.ColumnClustered)
+                chart.DataRange = sheet.Range("p18:r" & CST_CON + 18)
+                chart.SeriesDataFromRange = False
+                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
+                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
+                chart.LeftColumn = 2
+                chart.TopRow = 12
+                chart.RightColumn = 8
+                chart.BottomRow = 24
+                chart.ChartTitle = "PM PLAN VS ACHIVMENT FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
+                chart.ChartTitleArea.Font.FontName = "Calibri"
+                chart.ChartTitleArea.Font.Size = 10.5
+                chart.ChartTitleArea.Font.IsBold = True
+                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
+                chart.PrimaryValueAxis.HasMajorGridLines = True
+                Dim dv5 As New DataView(PM_DT2)
+                dv5.RowFilter = "STYPE='OIL SERVICE' AND DOS >= #" & D1 & "# and DOS <= #" & D2 & "#"
+                chart.PrimaryValueAxis.MaxValue = dv5.Count + 1
+                chart.Legend.Position = LegendPositionType.Right
+
+                chart = sheet.Charts.Add(ExcelChartType.Column3DClustered)
+
+                chart.DataRange = sheet.Range("p12:r15")
+                chart.SeriesDataFromRange = False
+                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
+                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
+                chart.LeftColumn = 9
+                chart.TopRow = 12
+                chart.RightColumn = 15
+                chart.BottomRow = 24
+                chart.ChartTitle = "SPARE TARGET ACHIVEMENT FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
+                chart.ChartTitleArea.Font.FontName = "Calibri"
+                chart.ChartTitleArea.Font.Size = 10.5
+                chart.ChartTitleArea.Font.IsBold = True
+                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
+                chart.PrimaryValueAxis.HasMajorGridLines = True
+                chart.PrimaryValueAxis.MaxValue = 80000
+                chart.Legend.Position = LegendPositionType.Right
+
+                sheet.SetColumnWidth(1, 1)
+                sheet.SetColumnWidth(8, 1)
+                sheet.SetColumnWidth(15, 1)
+                workbook.Dispose()
+                book.SaveToFile(excelfile1, ExcelVersion.Version2007)
+                Dim jpgfile = Server.MapPath("\App_Data\DATA\" & "MONTHLY REPORT FOR " & Format(Today, "MMM-yyyy") & ".jpg")
+                sheet.SaveToImage(jpgfile)
+
+                workbook = New XLWorkbook(excelfile1)
+                workbook.Worksheet(7).Delete()
+                workbook.SaveAs(excelfile1)
+
+
+                Dim img1 As LinkedResource = New LinkedResource(jpgfile, MediaTypeNames.Image.Jpeg)
+                img1.ContentId = "Image1"
+
+
+
+				Dim mail As New MailMessage
+                mail.Subject = "MONTLY REPORT FOR " & Format(Today, "MMM-yyyy")
+                mail.To.Add("pathllk3@gmail.com")
+                mail.CC.Add("brelcworks@YAHOO.COM")
+                mail.From = New MailAddress("brelcworks@gmail.com")
+                Dim strMsg As String = Nothing
+                strMsg = strMsg & "<html><body>"
+                strMsg = strMsg & "<h4>PERFORMANCE REPORT FOR THE MONTH OF " & Now.ToString("MMM-yyyy") & "</h4>"
+                strMsg = strMsg & "<img src=cid:Image1 alt='image description'>"
+                strMsg = strMsg & "<h4  style='color:blue;'>*ABOVE IS A SYSTEM AUTO GENERATED REPORT ! PLEASE INFORM US ANY MISTAKES IN THE REPORT</h4>"
+                strMsg = strMsg & "<h4  style='color:violet;'>DETAILS ARE IN THE ATTACHMENT</h4>"
+                strMsg = strMsg & "</body></html>"
+                Dim av1 As AlternateView = AlternateView.CreateAlternateViewFromString(strMsg, Nothing, MediaTypeNames.Text.Html)
+                av1.LinkedResources.Add(img1)
+                mail.AlternateViews.Add(av1)
+                mail.IsBodyHtml = True
+                Dim attach As New Attachment(excelfile1)
+                mail.Attachments.Add(attach)
+                Dim smtp As New SmtpClient("smtp.gmail.com")
+                smtp.EnableSsl = True
+                smtp.Credentials = New System.Net.NetworkCredential("brelcworks", "ratanbose")
+                smtp.Port = "587"
+                mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
+                smtp.Send(mail)

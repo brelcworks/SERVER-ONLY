@@ -3,8 +3,6 @@ Imports System.Data.SqlClient
 Imports System.IO
 Imports System.Net
 Imports System.Net.Mail
-Imports Spire.Xls
-Imports Spire.Xls.Chart
 Imports System.Net.Mime
 
 Public Class _Default
@@ -31,7 +29,7 @@ Public Class _Default
     Protected Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Dim ss As Integer = Now.ToString("HH") * 60 * 60 + Now.ToString("mm") * 60 + Now.ToString("ss")
         Dim ss1 As Integer = Now.ToString("ss")
-        CT = ss
+        CT = ss1
         ct1 = ss1
         Try
             If CT = 86000 Then
@@ -58,8 +56,8 @@ Public Class _Default
             EXLERR(Now.ToString, ex.ToString)
         End Try
         Try
-            If CT = 86100 Then
-                If IsLastDay(Today()) = True Then
+            If CT = 20 Then
+                If IsLastDay(Today()) = False Then
                     LP1 = False
                     MON_REP()
                 End If
@@ -1141,83 +1139,83 @@ Public Class _Default
                 xlWorkSheet = workbook.Worksheet("DASHBOARD")
                 Dim POP_dv As New DataView(PMR_AM_DT2)
                 POP_dv.RowFilter = "AMC='AMC'"
-                xlWorkSheet.Cell(7, 16).Value = "CPT DETAILS"
-                xlWorkSheet.Range("P7", "r7").Merge()
-                xlWorkSheet.Cell(8, 16).Value = "AMC POPULATION"
-                xlWorkSheet.Cell(8, 17).Value = "TARGET"
-                xlWorkSheet.Cell(8, 18).Value = "ACTUAL"
+                xlWorkSheet.Cell(7, 2).Value = "CPT DETAILS"
+                xlWorkSheet.Range("b7", "d7").Merge()
+                xlWorkSheet.Cell(8, 2).Value = "AMC POPULATION"
+                xlWorkSheet.Cell(8, 3).Value = "TARGET"
+                xlWorkSheet.Cell(8, 4).Value = "ACTUAL"
                 POP_dv.RowFilter = "AMC='AMC'"
                 Dim AMC_CON As Integer = POP_dv.Count
-                xlWorkSheet.Cell(9, 16).Value = AMC_CON
-                xlWorkSheet.Cell(9, 17).Value = "1"
+                xlWorkSheet.Cell(9, 2).Value = AMC_CON
+                xlWorkSheet.Cell(9, 3).Value = "1"
                 Dim PMR_dv As New DataView(PM_DT2)
                 PMR_dv.RowFilter = "STYPE='CUSTOMER COMPLAINT' AND CDATI >= #" & D1 & "# and CDATI <= #" & D2 & "#"
-                xlWorkSheet.Cell(9, 18).Value = PMR_dv.Count
-                xlWorkSheet.Range("p8", "r9").Style.Border.TopBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p8", "r9").Style.Border.RightBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p8", "r9").Style.Border.LeftBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p8", "r9").Style.Border.BottomBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p8", "r8").Style.Fill.BackgroundColor = XLColor.Turquoise
-                xlWorkSheet.Range("p7").Style.Fill.BackgroundColor = XLColor.IndianYellow
+                xlWorkSheet.Cell(9, 4).Value = PMR_dv.Count
+                xlWorkSheet.Range("b8", "d9").Style.Border.TopBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b8", "d9").Style.Border.RightBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b8", "d9").Style.Border.LeftBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b8", "d9").Style.Border.BottomBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b8", "d8").Style.Fill.BackgroundColor = XLColor.Turquoise
+                xlWorkSheet.Range("b7").Style.Fill.BackgroundColor = XLColor.Purple
 
-                xlWorkSheet.Cell(2, 16).Value = "SLA DETAILS"
-                xlWorkSheet.Range("P2", "s2").Merge()
-                xlWorkSheet.Cell(3, 16).Value = "DESCRIPTION"
-                xlWorkSheet.Cell(3, 17).Value = "NO OF COMPLAINT"
-                xlWorkSheet.Cell(3, 18).Value = "WITHIN SLA"
-                xlWorkSheet.Cell(3, 19).Value = "OUT OF SLA"
-                xlWorkSheet.Cell(4, 16).Value = "MINOR"
-                xlWorkSheet.Cell(5, 16).Value = "MAJOR"
+                xlWorkSheet.Cell(2, 2).Value = "SLA DETAILS"
+                xlWorkSheet.Range("b2", "e2").Merge()
+                xlWorkSheet.Cell(3, 2).Value = "DESCRIPTION"
+                xlWorkSheet.Cell(3, 3).Value = "NO OF COMPLAINT"
+                xlWorkSheet.Cell(3, 4).Value = "WITHIN SLA"
+                xlWorkSheet.Cell(3, 5).Value = "OUT OF SLA"
+                xlWorkSheet.Cell(4, 2).Value = "MINOR"
+                xlWorkSheet.Cell(5, 2).Value = "MAJOR"
                 PMR_dv.RowFilter = "STYPE='CUSTOMER COMPLAINT' AND CDATI >= #" & D1 & "# and CDATI <= #" & D2 & "# AND SERV='MINOR'"
                 Dim MINOR_COM As Integer = PMR_dv.Count
-                xlWorkSheet.Cell(4, 17).Value = MINOR_COM
+                xlWorkSheet.Cell(4, 3).Value = MINOR_COM
                 PMR_dv.RowFilter = "STYPE='CUSTOMER COMPLAINT' AND CDATI >= #" & D1 & "# and CDATI <= #" & D2 & "# AND SERV='MAJOR'"
                 Dim MAJOR_COM As Integer = PMR_dv.Count
-                xlWorkSheet.Cell(5, 17).Value = MAJOR_COM
+                xlWorkSheet.Cell(5, 3).Value = MAJOR_COM
                 PMR_dv.RowFilter = "STYPE='CUSTOMER COMPLAINT' AND CDATI >= #" & D1 & "# and CDATI <= #" & D2 & "# AND SERV='MINOR' AND SLA='WITHIN SLA'"
-                xlWorkSheet.Cell(4, 18).Value = PMR_dv.Count
+                xlWorkSheet.Cell(4, 4).Value = PMR_dv.Count
                 PMR_dv.RowFilter = "STYPE='CUSTOMER COMPLAINT' AND CDATI >= #" & D1 & "# and CDATI <= #" & D2 & "# AND SERV='MAJOR' AND SLA='WITHIN SLA'"
-                xlWorkSheet.Cell(5, 18).Value = PMR_dv.Count
+                xlWorkSheet.Cell(5, 4).Value = PMR_dv.Count
                 PMR_dv.RowFilter = "STYPE='CUSTOMER COMPLAINT' AND CDATI >= #" & D1 & "# and CDATI <= #" & D2 & "# AND SERV='MINOR' AND SLA='OUT OF SLA'"
-                xlWorkSheet.Cell(4, 19).Value = PMR_dv.Count
+                xlWorkSheet.Cell(4, 5).Value = PMR_dv.Count
                 PMR_dv.RowFilter = "STYPE='CUSTOMER COMPLAINT' AND CDATI >= #" & D1 & "# and CDATI <= #" & D2 & "# AND SERV='MAJOR' AND SLA='OUT OF SLA'"
-                xlWorkSheet.Cell(5, 19).Value = PMR_dv.Count
-                xlWorkSheet.Range("p3", "s5").Style.Border.TopBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p3", "s5").Style.Border.RightBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p3", "s5").Style.Border.LeftBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p3", "s5").Style.Border.BottomBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p3", "s3").Style.Fill.BackgroundColor = XLColor.Turquoise
-                xlWorkSheet.Range("p2").Style.Fill.BackgroundColor = XLColor.IndianYellow
+                xlWorkSheet.Cell(5, 5).Value = PMR_dv.Count
+                xlWorkSheet.Range("b3", "e5").Style.Border.TopBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b3", "e5").Style.Border.RightBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b3", "e5").Style.Border.LeftBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b3", "e5").Style.Border.BottomBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b3", "e3").Style.Fill.BackgroundColor = XLColor.Turquoise
+                xlWorkSheet.Range("b2").Style.Fill.BackgroundColor = XLColor.Purple
                 xlWorkSheet.Columns().AdjustToContents()
 
                 Dim CST_CON As Integer = 0
                 For Y As Integer = 0 To PM_DT1.Rows.Count - 1
                     Dim dv As New DataView(PM_DT2)
                     dv.RowFilter = "CUST='" & PM_DT1(Y)("CUST") & "'" & " AND STYPE='OIL SERVICE' AND DOS >= #" & D1 & "# and DOS <= #" & D2 & "#"
-                    xlWorkSheet.Cell(Y + 19, 16).Value = PM_DT1(Y)("CUST")
-                    xlWorkSheet.Cell(Y + 19, 17).Value = dv.Count
-                    xlWorkSheet.Cell(Y + 19, 18).Value = dv.Count
+                    xlWorkSheet.Cell(Y + 19, 2).Value = PM_DT1(Y)("CUST")
+                    xlWorkSheet.Cell(Y + 19, 3).Value = dv.Count
+                    xlWorkSheet.Cell(Y + 19, 4).Value = dv.Count
                     CST_CON = CST_CON + 1
                 Next
-                xlWorkSheet.Cell(17, 16).Value = "PM DETAILS"
-                xlWorkSheet.Range("P17", "R17").Merge()
-                xlWorkSheet.Cell(18, 16).Value = "CUSTOMER"
-                xlWorkSheet.Cell(18, 17).Value = "PM DONE"
-                xlWorkSheet.Cell(18, 18).Value = "PM PLAN"
+                xlWorkSheet.Cell(17, 2).Value = "PM DETAILS"
+                xlWorkSheet.Range("b17", "d17").Merge()
+                xlWorkSheet.Cell(18, 2).Value = "CUSTOMER"
+                xlWorkSheet.Cell(18, 3).Value = "PM DONE"
+                xlWorkSheet.Cell(18, 4).Value = "PM PLAN"
                 Dim PM_L_ROW As Integer = xlWorkSheet.RowsUsed.Count
-                xlWorkSheet.Range("p17", "r" & CST_CON + 18).Style.Border.TopBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p17", "r" & CST_CON + 18).Style.Border.RightBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p17", "r" & CST_CON + 18).Style.Border.LeftBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p17", "r" & CST_CON + 18).Style.Border.BottomBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p18", "r18").Style.Fill.BackgroundColor = XLColor.Turquoise
-                xlWorkSheet.Range("p17").Style.Fill.BackgroundColor = XLColor.IndianYellow
+                xlWorkSheet.Range("b17", "d" & CST_CON + 18).Style.Border.TopBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b17", "d" & CST_CON + 18).Style.Border.RightBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b17", "d" & CST_CON + 18).Style.Border.LeftBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b17", "d" & CST_CON + 18).Style.Border.BottomBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b18", "d18").Style.Fill.BackgroundColor = XLColor.Turquoise
+                xlWorkSheet.Range("b17").Style.Fill.BackgroundColor = XLColor.Purple
                 xlWorkSheet.Columns().AdjustToContents()
 
-                xlWorkSheet.Cell(11, 16).Value = "ORDER VS TARGET ACHIVEMENT (LAST 3 MONTHS)"
-                xlWorkSheet.Range("P11", "R11").Merge()
-                xlWorkSheet.Cell(12, 16).Value = "MONTH"
-                xlWorkSheet.Cell(12, 17).Value = "ORDER AMOUNT"
-                xlWorkSheet.Cell(12, 18).Value = "TARGET AMOUNT"
+                xlWorkSheet.Cell(11, 2).Value = "ORDER VS TARGET ACHIVEMENT (LAST 3 MONTHS)"
+                xlWorkSheet.Range("b11", "d11").Merge()
+                xlWorkSheet.Cell(12, 2).Value = "MONTH"
+                xlWorkSheet.Cell(12, 3).Value = "ORDER AMOUNT"
+                xlWorkSheet.Cell(12, 4).Value = "TARGET AMOUNT"
                 Dim MON As Integer = Now.ToString("MM")
                 Dim PU_TOT As Integer = 0
                 For I As Integer = 0 To 2
@@ -1233,203 +1231,30 @@ Public Class _Default
                         If Not IsDBNull(PUR_DT(I)("BAMT")) Then TOT = PUR_DT.Compute("Sum(BAMT)", "")
                     End If
 
-                    xlWorkSheet.Cell(I + 13, 16).Value = MON - I & "/1/" & Now.ToString("yyyy")
-                    xlWorkSheet.Cell(I + 13, 16).Style.NumberFormat.SetFormat("MMM-yyyy")
-                    xlWorkSheet.Cell(I + 13, 17).Value = TOT
-                    xlWorkSheet.Cell(I + 13, 18).Value = "35000"
+                    xlWorkSheet.Cell(I + 13, 2).Value = MON - I & "/1/" & Now.ToString("yyyy")
+                    xlWorkSheet.Cell(I + 13, 2).Style.NumberFormat.SetFormat("MMM-yyyy")
+                    xlWorkSheet.Cell(I + 13, 3).Value = TOT
+                    xlWorkSheet.Cell(I + 13, 4).Value = "35000"
                 Next
-                xlWorkSheet.Range("p11", "R15").Style.Border.TopBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p11", "R15").Style.Border.RightBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p11", "R15").Style.Border.LeftBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p11", "R15").Style.Border.BottomBorder = XLBorderStyleValues.Thin
-                xlWorkSheet.Range("p12", "R12").Style.Fill.BackgroundColor = XLColor.Turquoise
-                xlWorkSheet.Range("p11").Style.Fill.BackgroundColor = XLColor.IndianYellow
+                xlWorkSheet.Range("b11", "d15").Style.Border.TopBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b11", "d15").Style.Border.RightBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b11", "d15").Style.Border.LeftBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b11", "d15").Style.Border.BottomBorder = XLBorderStyleValues.Thin
+                xlWorkSheet.Range("b12", "d12").Style.Fill.BackgroundColor = XLColor.Turquoise
+                xlWorkSheet.Range("b11").Style.Fill.BackgroundColor = XLColor.Purple
                 xlWorkSheet.Columns().AdjustToContents()
                 xlWorkSheet.Range("a1", xlWorkSheet.LastColumnUsed.ColumnLetter & xlWorkSheet.LastRowUsed.RowNumber + 1).Style.Border.OutsideBorder = XLBorderStyleValues.SlantDashDot
                 xlWorkSheet.Range("a1", xlWorkSheet.LastColumnUsed.ColumnLetter & xlWorkSheet.LastRowUsed.RowNumber + 1).Style.Border.OutsideBorderColor = XLColor.TractorRed
-
                 Dim excelfile1 As String = Server.MapPath("\App_Data\DATA\" & "MONTHLY REPORT FOR " & Format(Today, "MMM-yyyy") & ".xlsx")
                 workbook.SaveAs(excelfile1)
 
-                Dim book As Workbook = New Workbook()
-                book.LoadFromFile(excelfile1)
-                Dim sheet As Worksheet = book.Worksheets("CPT")
-                Dim chart As Chart = sheet.Charts.Add(ExcelChartType.ColumnClustered)
-                Dim l_COL As String = ChrW((Val(sheet.LastColumn.ToString) - 2) + 65)
-                Dim l_ROW As Integer = Val(sheet.LastRow.ToString) - 1
-
-                chart.DataRange = sheet.Range("b5:" & l_COL & l_ROW)
-                chart.SeriesDataFromRange = False
-                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
-                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
-                chart.LeftColumn = Val(sheet.LastColumn.ToString) + 2
-                chart.TopRow = 5
-                chart.RightColumn = 19
-                chart.BottomRow = 24
-                chart.ChartTitle = "CPT FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
-                chart.ChartTitleArea.Font.FontName = "Calibri"
-                chart.ChartTitleArea.Font.Size = 13
-                chart.ChartTitleArea.Font.IsBold = True
-                chart.PrimaryCategoryAxis.Title = "CUSTOMERS"
-                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
-                chart.PrimaryValueAxis.Title = "COMPLAINTS"
-                chart.PrimaryValueAxis.HasMajorGridLines = False
-                chart.PrimaryValueAxis.MaxValue = 50
-                chart.PrimaryValueAxis.TitleArea.TextRotationAngle = 90
-                chart.Legend.Position = LegendPositionType.Right
-
-                sheet = book.Worksheets("SERVICE")
-                chart = sheet.Charts.Add(ExcelChartType.ColumnClustered)
-                l_COL = ChrW((Val(sheet.LastColumn.ToString) - 2) + 65)
-                l_ROW = Val(sheet.LastRow.ToString) - 1
-
-                chart.DataRange = sheet.Range("b5:" & l_COL & l_ROW)
-                chart.SeriesDataFromRange = False
-                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
-                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
-                chart.LeftColumn = Val(sheet.LastColumn.ToString) + 2
-                chart.TopRow = 5
-                chart.RightColumn = 19
-                chart.BottomRow = 24
-                chart.ChartTitle = "SERVICE FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
-                chart.ChartTitleArea.Font.FontName = "Calibri"
-                chart.ChartTitleArea.Font.Size = 13
-                chart.ChartTitleArea.Font.IsBold = True
-                chart.PrimaryCategoryAxis.Title = "CUSTOMERS"
-                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
-                chart.PrimaryValueAxis.Title = "SERVICES"
-                chart.PrimaryValueAxis.HasMajorGridLines = True
-                chart.PrimaryValueAxis.MaxValue = 20
-                chart.PrimaryValueAxis.TitleArea.TextRotationAngle = 90
-                chart.Legend.Position = LegendPositionType.Right
-
-                sheet = book.Worksheets("SLA")
-                chart = sheet.Charts.Add(ExcelChartType.ColumnClustered)
-                chart.DataRange = sheet.Range("b3:E5")
-                chart.SeriesDataFromRange = False
-                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
-                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
-                chart.LeftColumn = 2
-                chart.TopRow = 7
-                chart.RightColumn = 6
-                chart.BottomRow = 20
-                chart.ChartTitle = "SLA FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
-                chart.ChartTitleArea.Font.FontName = "Calibri"
-                chart.ChartTitleArea.Font.Size = 10.5
-                chart.ChartTitleArea.Font.IsBold = True
-                chart.PrimaryValueAxis.HasMajorGridLines = True
-                chart.PrimaryValueAxis.MaxValue = 5
-                chart.Legend.Position = LegendPositionType.Right
-
-                sheet = book.Worksheets("DASHBOARD")
-                chart = sheet.Charts.Add(ExcelChartType.Column3DClustered)
-
-                chart.DataRange = sheet.Range("p8:r9")
-                chart.SeriesDataFromRange = False
-                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
-                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
-                chart.LeftColumn = 9
-                chart.TopRow = 2
-                chart.RightColumn = 15
-                chart.BottomRow = 11
-                chart.ChartTitle = "CPT FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
-                chart.ChartTitleArea.Font.FontName = "Calibri"
-                chart.ChartTitleArea.Font.Size = 10.5
-                chart.ChartTitleArea.Font.IsBold = True
-                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
-                chart.PrimaryValueAxis.HasMajorGridLines = True
-                chart.PrimaryValueAxis.MaxValue = AMC_CON + 1
-                chart.Legend.Position = LegendPositionType.Right
-
-                chart = sheet.Charts.Add(ExcelChartType.Column3DClustered)
-                chart.DataRange = sheet.Range("p3:s5")
-                chart.SeriesDataFromRange = False
-                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
-                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
-                chart.LeftColumn = 2
-                chart.TopRow = 2
-                chart.RightColumn = 8
-                chart.BottomRow = 11
-                chart.ChartTitle = "SLA FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
-                chart.ChartTitleArea.Font.FontName = "Calibri"
-                chart.ChartTitleArea.Font.Size = 10.5
-                chart.ChartTitleArea.Font.IsBold = True
-                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
-                chart.PrimaryValueAxis.HasMajorGridLines = True
-                chart.PrimaryValueAxis.MaxValue = MINOR_COM + MAJOR_COM + 1
-                chart.Legend.Position = LegendPositionType.Right
-
-                chart = sheet.Charts.Add(ExcelChartType.ColumnClustered)
-                chart.DataRange = sheet.Range("p18:r" & CST_CON + 18)
-                chart.SeriesDataFromRange = False
-                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
-                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
-                chart.LeftColumn = 2
-                chart.TopRow = 12
-                chart.RightColumn = 8
-                chart.BottomRow = 24
-                chart.ChartTitle = "PM PLAN VS ACHIVMENT FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
-                chart.ChartTitleArea.Font.FontName = "Calibri"
-                chart.ChartTitleArea.Font.Size = 10.5
-                chart.ChartTitleArea.Font.IsBold = True
-                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
-                chart.PrimaryValueAxis.HasMajorGridLines = True
-                Dim dv5 As New DataView(PM_DT2)
-                dv5.RowFilter = "STYPE='OIL SERVICE' AND DOS >= #" & D1 & "# and DOS <= #" & D2 & "#"
-                chart.PrimaryValueAxis.MaxValue = dv5.Count + 1
-                chart.Legend.Position = LegendPositionType.Right
-
-                chart = sheet.Charts.Add(ExcelChartType.Column3DClustered)
-
-                chart.DataRange = sheet.Range("p12:r15")
-                chart.SeriesDataFromRange = False
-                chart.ChartArea.Border.Weight = ChartLineWeightType.Medium
-                chart.ChartArea.Border.Color = System.Drawing.Color.DeepSkyBlue
-                chart.LeftColumn = 9
-                chart.TopRow = 12
-                chart.RightColumn = 15
-                chart.BottomRow = 24
-                chart.ChartTitle = "SPARE TARGET ACHIVEMENT FOR THE MONTH OF " & Now.ToString("MMM-yyyy")
-                chart.ChartTitleArea.Font.FontName = "Calibri"
-                chart.ChartTitleArea.Font.Size = 10.5
-                chart.ChartTitleArea.Font.IsBold = True
-                chart.PrimaryCategoryAxis.Font.Color = System.Drawing.Color.Blue
-                chart.PrimaryValueAxis.HasMajorGridLines = True
-                chart.PrimaryValueAxis.MaxValue = 80000
-                chart.Legend.Position = LegendPositionType.Right
-
-                sheet.SetColumnWidth(1, 1)
-                sheet.SetColumnWidth(8, 1)
-                sheet.SetColumnWidth(15, 1)
-                workbook.Dispose()
-                book.SaveToFile(excelfile1, ExcelVersion.Version2007)
-                Dim jpgfile = Server.MapPath("\App_Data\DATA\" & "MONTHLY REPORT FOR " & Format(Today, "MMM-yyyy") & ".jpg")
-                sheet.SaveToImage(jpgfile)
-
-                workbook = New XLWorkbook(excelfile1)
-                workbook.Worksheet(7).Delete()
-                workbook.SaveAs(excelfile1)
-
-
-                Dim img1 As LinkedResource = New LinkedResource(jpgfile, MediaTypeNames.Image.Jpeg)
-                img1.ContentId = "Image1"
-
+                Dim rng = xlWorkSheet.RangeUsed
                 Dim mail As New MailMessage
                 mail.Subject = "MONTLY REPORT FOR " & Format(Today, "MMM-yyyy")
                 mail.To.Add("pathllk3@gmail.com")
                 mail.CC.Add("brelcworks@YAHOO.COM")
                 mail.From = New MailAddress("brelcworks@gmail.com")
-                Dim strMsg As String = Nothing
-                strMsg = strMsg & "<html><body>"
-                strMsg = strMsg & "<h4>PERFORMANCE REPORT FOR THE MONTH OF " & Now.ToString("MMM-yyyy") & "</h4>"
-                strMsg = strMsg & "<img src=cid:Image1 alt='image description'>"
-                strMsg = strMsg & "<h4  style='color:blue;'>*ABOVE IS A SYSTEM AUTO GENERATED REPORT ! PLEASE INFORM US ANY MISTAKES IN THE REPORT</h4>"
-                strMsg = strMsg & "<h4  style='color:violet;'>DETAILS ARE IN THE ATTACHMENT</h4>"
-                strMsg = strMsg & "</body></html>"
-                Dim av1 As AlternateView = AlternateView.CreateAlternateViewFromString(strMsg, Nothing, MediaTypeNames.Text.Html)
-                av1.LinkedResources.Add(img1)
-                mail.AlternateViews.Add(av1)
-                mail.IsBodyHtml = True
+                mail.Body = "Dear Sir," & vbCrLf & vbTab & "Please Find The Monthly Report Sheet in The Attachment." & vbCrLf & vbCrLf & vbCrLf & "Thanks & Regards" & vbCrLf & "Anjan Paul" & vbCrLf & "For, B & R Electrical Works"
                 Dim attach As New Attachment(excelfile1)
                 mail.Attachments.Add(attach)
                 Dim smtp As New SmtpClient("smtp.gmail.com")
@@ -1442,11 +1267,12 @@ Public Class _Default
                 LP1 = True
             Catch ex As Exception
                 LP1 = False
-                MsgBox(ex.ToString)
+                EXLERR(Now.ToString, ex.ToString)
             End Try
         Loop
     End Sub
     Function IsLastDay(ByVal myDate As Date) As Boolean
         Return myDate.Day = Date.DaysInMonth(myDate.Year, myDate.Month)
     End Function
+
 End Class
