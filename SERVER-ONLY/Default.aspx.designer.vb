@@ -77,13 +77,22 @@ Partial Public Class _Default
     Protected WithEvents CTSTA As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
-    '''btn1 control.
+    '''DLBCKLBL control.
     '''</summary>
     '''<remarks>
     '''Auto-generated field.
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
-    Protected WithEvents btn1 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents DLBCKLBL As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''DLRPTLBL control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents DLRPTLBL As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
     '''Timer1 control.

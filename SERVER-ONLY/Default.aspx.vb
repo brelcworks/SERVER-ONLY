@@ -4,6 +4,7 @@ Imports System.IO
 Imports System.Net
 Imports System.Net.Mail
 Imports System.Net.Mime
+Imports System.Web.Configuration
 
 Public Class _Default
     Inherits System.Web.UI.Page
@@ -13,16 +14,16 @@ Public Class _Default
     Private streamWriter As StreamWriter
     Private CT As Integer = 0
     Private ct1 As Integer = 0
-    Private ct2 As String
     Private ISCOM As Boolean = True
-    Private dlybln As Boolean = True
     Private AD As Boolean = False
     Private LP As Boolean = False
     Private LP1 As Boolean = False
+    Private dlrpt As Boolean = False
     Public CON5 As New System.Data.OleDb.OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("\App_Data\ERR\ERR.accdb") & ";Persist Security Info=False;")
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Try
-
+            DLBCKLBL.Text = "TODAY BACKUP WILL DONE AFTER "
+            DLRPTLBL.Text = "TODAY REPORT WILL SENT AFTER "
         Catch ex As Exception
 
         End Try
@@ -31,9 +32,9 @@ Public Class _Default
     Protected Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         Dim ss As Integer = Now.ToString("HH") * 60 * 60 + Now.ToString("mm") * 60 + Now.ToString("ss")
         Dim ss1 As Integer = Now.ToString("ss")
-        ct2 = Now.ToString("HH")
         CT = ss1
         ct1 = ss1
+
         Try
             If CT = 25 Then
                 ISCOM = False
@@ -43,9 +44,13 @@ Public Class _Default
             EXLERR(Now.ToString, ex.ToString)
         End Try
         Try
-            If ct2 = "07" Then
-                If dlybln = False Then
-                    AD = False
+            Dim hr As String = Now.ToString("HH")
+            If hr = "10" Then
+                WebConfigurationManager.AppSettings.Set("dlrpset", "true")
+            End If
+            Dim vl As String = WebConfigurationManager.AppSettings("dlrpset")
+            If hr = "23" Then
+                If vl = "true" Then
                     DLYRPT()
                 End If
             End If
@@ -71,8 +76,9 @@ Public Class _Default
             EXLERR(Now.ToString, ex.ToString)
         End Try
         Try
+            Dim hr As String = Now.ToString("HH")
             CTSTA.Text = CT
-            nt.Text = Now.ToString("dd-MMMM-yyyy hh:mm:ss tt fff")
+            nt.Text = Now.ToString("dd-MMMM-yyyy hh:mm:ss tt fff") & " Total Seconds of Today is " & ss
         Catch ex As Exception
             EXLERR(Now.ToString, ex.ToString)
         End Try
@@ -701,9 +707,9 @@ Public Class _Default
                 mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
                 smtp.Send(mail)
                 EXLERR(Now.ToString, "DAILY REPORT SENT")
-                ERR.Text = "DAILY REPORT SENT"
+                DLRPTLBL.Text = "DAILY REPORT SENT"
+                WebConfigurationManager.AppSettings.Set("dlrpset", "false")
                 AD = True
-                dlybln = True
             Catch ex As Exception
                 AD = False
                 EXLERR(Now.ToString, ex.ToString)
@@ -876,7 +882,7 @@ Public Class _Default
                 smtp.Credentials = New System.Net.NetworkCredential("brelcworks", "ratanbose")
                 smtp.Port = "587"
                 mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
-                smtp.Send(mail)
+
                 EXLERR(Now.ToString, "RM TRACKER SENT")
                 ERR.Text = "RM TRACKER SENT"
                 LP = True
@@ -1271,7 +1277,7 @@ Public Class _Default
                 smtp.Credentials = New System.Net.NetworkCredential("brelcworks", "ratanbose")
                 smtp.Port = "587"
                 mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
-                smtp.Send(mail)
+
                 ERR.Text = "MONTHLY REPORT SENT"
                 LP1 = True
             Catch ex As Exception
@@ -1288,8 +1294,5 @@ Public Class _Default
         ERR.Text = msg
     End Sub
 
-    Private Sub btn1_Click(sender As Object, e As EventArgs) Handles btn1.Click
-        dlybln = False
-        ERR.Text = "return to false"
-    End Sub
+
 End Class

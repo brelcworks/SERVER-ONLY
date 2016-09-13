@@ -100,9 +100,18 @@ Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
 </member>
-<member name="F:SERVER_ONLY._Default._btn1">
+<member name="F:SERVER_ONLY._Default._DLBCKLBL">
 <summary>
-btn1 control.
+DLBCKLBL control.
+</summary>
+<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
+</member>
+<member name="F:SERVER_ONLY._Default._DLRPTLBL">
+<summary>
+DLRPTLBL control.
 </summary>
 <remarks>
 Auto-generated field.
