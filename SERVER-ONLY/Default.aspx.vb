@@ -49,7 +49,7 @@ Public Class _Default
                 WebConfigurationManager.AppSettings.Set("dlrpset", "true")
             End If
             Dim vl As String = WebConfigurationManager.AppSettings("dlrpset")
-            If hr = "23" Then
+            If hr = "05" Then
                 If vl = "true" Then
                     DLYRPT()
                 End If
