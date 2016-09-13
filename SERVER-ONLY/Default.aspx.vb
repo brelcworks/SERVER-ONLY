@@ -44,7 +44,7 @@ Public Class _Default
             EXLERR(Now.ToString, ex.ToString)
         End Try
         Try
-            Dim hr As String = Now.ToString("HH")
+            Dim hr As String = Now.ToString("hh")
             If hr = "10" Then
                 WebConfigurationManager.AppSettings.Set("dlrpset", "true")
             End If
