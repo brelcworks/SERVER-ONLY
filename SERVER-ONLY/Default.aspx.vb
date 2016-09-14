@@ -22,7 +22,6 @@ Public Class _Default
     Public CON5 As New System.Data.OleDb.OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("\App_Data\ERR\ERR.accdb") & ";Persist Security Info=False;")
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Try
-            Response.Redirect("errgrid.aspx")
             DLBCKLBL.Text = "TODAY BACKUP WILL DONE AFTER "
             DLRPTLBL.Text = "TODAY REPORT WILL SENT AFTER "
         Catch ex As Exception
