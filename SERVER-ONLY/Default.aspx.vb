@@ -322,7 +322,6 @@ Public Class _Default
     Private Sub DLYRPT()
         Do Until AD = True
             Try
-                WebConfigurationManager.AppSettings.Set("dlrpset", "false")
                 Dim PMR_AM_DA As New SqlDataAdapter("SELECT * FROM PMRs", CON_AM)
                 Dim PMR_AM_DT As New DataTable
                 PMR_AM_DA.Fill(PMR_AM_DT)
