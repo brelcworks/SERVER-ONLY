@@ -45,11 +45,11 @@ Public Class _Default
         End Try
         Try
             Dim hr As String = Now.ToString("hh")
-            If hr = "07" Then
+            If hr <> "10" Then
                 WebConfigurationManager.AppSettings.Set("dlrpset", "true")
             End If
             Dim vl As String = WebConfigurationManager.AppSettings("dlrpset")
-            If hr = "06" Then
+            If hr = "10" Then
                 If vl = "true" Then
                     DLYRPT()
                 End If
@@ -322,6 +322,7 @@ Public Class _Default
     Private Sub DLYRPT()
         Do Until AD = True
             Try
+                WebConfigurationManager.AppSettings.Set("dlrpset", "false")
                 Dim PMR_AM_DA As New SqlDataAdapter("SELECT * FROM PMRs", CON_AM)
                 Dim PMR_AM_DT As New DataTable
                 PMR_AM_DA.Fill(PMR_AM_DT)
@@ -682,7 +683,9 @@ Public Class _Default
                 xlWorkSheet.Range("a1", "AK1").Style.Fill.BackgroundColor = XLColor.Turquoise
 
                 Dim excelfile1 As String = Server.MapPath("\App_Data\DATA\" & "DAILY REPORT" & Format(Today, "dd-MMM-yyyy") & ".xlsx")
-                workbook.SaveAs(excelfile1)
+                If Not System.IO.File.Exists(excelfile1) Then
+                    workbook.SaveAs(excelfile1)
+                End If
 
                 Dim mail As New MailMessage
                 mail.Subject = "DAILY REPORT ON " & Format(Today, "dd-MMM-yyyy")
@@ -712,7 +715,7 @@ Public Class _Default
                 AD = True
             Catch ex As Exception
                 AD = False
-                EXLERR(Now.ToString, ex.ToString)
+                MsgBox(ex.ToString)
                 err_display(ex.ToString)
             End Try
         Loop
