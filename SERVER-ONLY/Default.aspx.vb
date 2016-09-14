@@ -46,11 +46,11 @@ Public Class _Default
         Try
             Dim hr As String = Now.ToString("hh")
             If hr <> "05" Then
-                WebConfigurationManager.AppSettings.Set("dlrpset", "false")
+                WebConfigurationManager.AppSettings.Set("dlrpset", "true")
             End If
             Dim vl As String = WebConfigurationManager.AppSettings("dlrpset")
             If hr = "05" Then
-                If vl = "false" Then
+                If vl = "true" Then
                     DLYRPT()
                 End If
             End If
@@ -322,7 +322,7 @@ Public Class _Default
     Private Sub DLYRPT()
         Do Until AD = True
             Try
-                WebConfigurationManager.AppSettings.Set("dlrpset", "true")
+                WebConfigurationManager.AppSettings.Set("dlrpset", "false")
                 Dim PMR_AM_DA As New SqlDataAdapter("SELECT * FROM PMRs", CON_AM)
                 Dim PMR_AM_DT As New DataTable
                 PMR_AM_DA.Fill(PMR_AM_DT)
@@ -712,7 +712,7 @@ Public Class _Default
                 ClientScript.RegisterStartupScript([GetType](), "alert", "alert('Email sent.');", True)
                 EXLERR(Now.ToString, "DAILY REPORT SENT")
                 DLRPTLBL.Text = "DAILY REPORT SENT"
-                WebConfigurationManager.AppSettings.Set("dlrpset", "true")
+                WebConfigurationManager.AppSettings.Set("dlrpset", "false")
                 AD = True
             Catch ex As Exception
                 AD = False
