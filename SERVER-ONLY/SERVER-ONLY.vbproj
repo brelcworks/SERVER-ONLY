@@ -124,6 +124,7 @@
   <ItemGroup>
     <Content Include="App_Data\ERR\ERR.accdb" />
     <Content Include="Default.aspx" />
+    <Content Include="errgrid.aspx" />
     <Content Include="JUNK\MIX.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -133,6 +134,13 @@
     </Compile>
     <Compile Include="Default.aspx.vb">
       <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="errgrid.aspx.designer.vb">
+      <DependentUpon>errgrid.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="errgrid.aspx.vb">
+      <DependentUpon>errgrid.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />

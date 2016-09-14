@@ -22,6 +22,7 @@ Public Class _Default
     Public CON5 As New System.Data.OleDb.OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("\App_Data\ERR\ERR.accdb") & ";Persist Security Info=False;")
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Try
+            Response.Redirect("errgrid.aspx")
             DLBCKLBL.Text = "TODAY BACKUP WILL DONE AFTER "
             DLRPTLBL.Text = "TODAY REPORT WILL SENT AFTER "
         Catch ex As Exception
@@ -1296,5 +1297,9 @@ Public Class _Default
     Protected Sub err_display(ByVal msg As String)
         err1.Text = msg
         ClientScript.RegisterStartupScript([GetType](), "alert", "alert(" & msg & ");", True)
+    End Sub
+
+    Private Sub btn1_Click(sender As Object, e As EventArgs) Handles btn1.Click
+        Response.Redirect("errgrid.aspx")
     End Sub
 End Class

@@ -27,6 +27,8 @@
                         <asp:Label ID="DLRPTLBL" runat="server" ForeColor="#6600CC"></asp:Label>
                         <br />
                         <asp:Label ID="err1" runat="server" ForeColor="Blue"></asp:Label>
+                        <br />
+                        <asp:Button ID="btn1" runat="server" Text="Redirect" />
                     </div>
                     <asp:Timer ID="Timer1" runat="server" Interval="1000">
                     </asp:Timer>
