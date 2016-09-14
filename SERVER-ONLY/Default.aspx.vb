@@ -1294,8 +1294,7 @@ Public Class _Default
         Return myDate.Day = Date.DaysInMonth(myDate.Year, myDate.Month)
     End Function
     Protected Sub err_display(ByVal msg As String)
-        ERR.Text = msg
+        err1.Text = msg
+        ClientScript.RegisterStartupScript([GetType](), "alert", "alert(" & msg & ");", True)
     End Sub
-
-
 End Class

@@ -95,6 +95,15 @@ Partial Public Class _Default
     Protected WithEvents DLRPTLBL As Global.System.Web.UI.WebControls.Label
     
     '''<summary>
+    '''err1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents err1 As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
     '''Timer1 control.
     '''</summary>
     '''<remarks>
