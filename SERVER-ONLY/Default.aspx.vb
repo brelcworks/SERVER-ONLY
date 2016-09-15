@@ -891,7 +891,7 @@ Public Class _Default
                 smtp.Credentials = New System.Net.NetworkCredential("brelcworks", "ratanbose")
                 smtp.Port = "587"
                 mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
-
+				smtp.Send(mail)
                 EXLERR(Now.ToString, "RM TRACKER SENT")
                 ERR.Text = "RM TRACKER SENT"
                 LP = True
