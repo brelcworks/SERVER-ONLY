@@ -51,11 +51,11 @@ Public Class _Default
         End Try
         Try
             Dim hr As String = Now.ToString("hh")
-            If hr <> "03" Then
+            If hr <> "04" Then
                 WebConfigurationManager.AppSettings.Set("dlrpset", "true")
             End If
             Dim vl As String = WebConfigurationManager.AppSettings("dlrpset")
-            If hr = "03" Then
+            If hr = "04" Then
                 If vl = "true" Then
                     DLYRPT()
                 End If
