@@ -24,6 +24,12 @@ Public Class _Default
         Try
             DLBCKLBL.Text = "TODAY BACKUP WILL DONE AFTER "
             DLRPTLBL.Text = "TODAY REPORT WILL SENT AFTER "
+            If CON_AM.State <> ConnectionState.Open Then CON_AM.Open()
+            Dim CMD1 As SqlCommand
+            CMD1 = CON_AM.CreateCommand
+            Dim A As String = "if not exists (select * from sysobjects where name='ERR' and xtype='U') CREATE TABLE  ERR (EID  int IDENTITY(1,1) PRIMARY KEY, ETIME VARCHAR(255), ERR VARCHAR(255))"
+            CMD1.CommandText = A
+            CMD1.ExecuteNonQuery()
         Catch ex As Exception
 
         End Try
@@ -310,13 +316,13 @@ Public Class _Default
         fileStream.Close()
     End Sub
     Private Sub EXLERR(ByVal ETIME As String, ByVal ERR As String)
-        If CON5.State <> ConnectionState.Open Then CON5.Open()
-        Dim ICMD As New OleDb.OleDbCommand
+        If CON_AM.State <> ConnectionState.Open Then CON_AM.Open()
+        Dim ICMD As New sqlcommand
         ICMD.CommandType = CommandType.Text
         ICMD.CommandText = "INSERT INTO ERR (ETIME, ERR) VALUES (@ETIME, @ERR)"
         ICMD.Parameters.AddWithValue("@ETIME", ETIME)
         ICMD.Parameters.AddWithValue("@ERR", ERR)
-        ICMD.Connection = CON5
+        ICMD.Connection = CON_AM
         ICMD.ExecuteNonQuery()
     End Sub
     Private Sub DLYRPT()
