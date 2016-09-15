@@ -5,6 +5,7 @@ Imports System.Net
 Imports System.Net.Mail
 Imports System.Net.Mime
 Imports System.Web.Configuration
+Imports System.Threading
 
 Public Class _Default
     Inherits System.Web.UI.Page
@@ -57,7 +58,9 @@ Public Class _Default
             Dim vl As String = WebConfigurationManager.AppSettings("dlrpset")
             If hr = "04" Then
                 If vl = "true" Then
-                    DLYRPT()
+                    Dim email As New Thread(Sub() DLYRPT())
+    email.IsBackground = True
+    email.Start()
                 End If
             End If
         Catch ex As Exception
