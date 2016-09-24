@@ -20,6 +20,7 @@ Public Class _Default
     Private LP As Boolean = False
     Private LP1 As Boolean = False
     Private dlrpt As Boolean = False
+    Private SVRCON As Boolean = False
     Public CON5 As New System.Data.OleDb.OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("\App_Data\ERR\ERR.accdb") & ";Persist Security Info=False;")
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Try
@@ -44,8 +45,8 @@ writelog(ex.Message)
         
         
         Try
-            Dim hr As String = Now.ToString("hh")
-            If hr <> "04" Then
+            Dim hr As String = Now.ToString("HH")
+            If hr <> "17" Then
             	WebConfigurationManager.AppSettings.Set("dlrpset", "true")
             	WebConfigurationManager.AppSettings.Set("rtrckr", "true")
             	WebConfigurationManager.AppSettings.Set("monrep", "true")
@@ -55,7 +56,7 @@ writelog(ex.Message)
             Dim vl1 As String = WebConfigurationManager.AppSettings("rtrckr")
             Dim vl2 As String = WebConfigurationManager.AppSettings("monrep")
             Dim vl3 As String = WebConfigurationManager.AppSettings("dlrep")
-            If hr = "04" Then
+            If hr = "17" Then
                 If vl = "true" Then
                     DLYRPT()
                 End If
@@ -80,20 +81,27 @@ writelog(ex.Message)
         
         Try
             Dim hr As String = Now.ToString("HH")
-            CTSTA.Text = CT & vbTab & vbTab & Now.ToString("dd-MMMM-yyyy HH:mm:ss tt fff")
+            CTSTA.Text = CT 
             nt.Text = Now.ToString("dd-MMMM-yyyy hh:mm:ss tt fff") & " Total Seconds of Today is " & ss
         Catch ex As Exception
             writelog(ex.Message)
         End Try
         Try
-            If ct = 59 Then
-                If CON_AM.State <> ConnectionState.Open Then
+        	If CT<> 59 Then
+        		SVRCON=False
+        	End If
+            If CT = 59 Then
+            	Do Until SVRCON = True
+            		 If CON_AM.State <> ConnectionState.Open Then
                     CON_AM.Open()
                     ERR.Text = "SERVER CONNECTION IS " & CON_AM.State.ToString
+                    SVRCON= True
                 End If
+               Loop
             End If
         Catch ex As Exception
-            writelog(ex.Message)
+        	writelog(ex.Message)
+        	SVRCON= False
         End Try
     End Sub
     Protected Sub hr_bck()

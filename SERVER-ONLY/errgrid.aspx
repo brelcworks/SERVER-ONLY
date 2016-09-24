@@ -13,8 +13,8 @@
     runat="server" AutoGenerateColumns="false">
     <Columns>
         <asp:BoundField DataField="EID" HeaderText="Id" ItemStyle-Width="100" />
-        <asp:BoundField DataField="ETIME" HeaderText="Name" ItemStyle-Width="200" />
-        <asp:BoundField DataField="ERR" HeaderText="Country" ItemStyle-Width="500" />
+        <asp:BoundField DataField="ETIME" HeaderText="Name" ItemStyle-Width="400" />
+        <asp:BoundField DataField="ERR" HeaderText="Country" ItemStyle-Width="600" />
     </Columns>
 </asp:GridView>
     </div>
