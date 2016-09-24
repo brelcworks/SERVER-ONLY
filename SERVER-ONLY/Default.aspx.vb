@@ -45,7 +45,7 @@ writelog(ex.Message)
         
         Try
             Dim hr As String = Now.ToString("hh")
-            If hr <> "09" Then
+            If hr <> "04" Then
             	WebConfigurationManager.AppSettings.Set("dlrpset", "true")
             	WebConfigurationManager.AppSettings.Set("rtrckr", "true")
             	WebConfigurationManager.AppSettings.Set("monrep", "true")
@@ -55,7 +55,7 @@ writelog(ex.Message)
             Dim vl1 As String = WebConfigurationManager.AppSettings("rtrckr")
             Dim vl2 As String = WebConfigurationManager.AppSettings("monrep")
             Dim vl3 As String = WebConfigurationManager.AppSettings("dlrep")
-            If hr = "09" Then
+            If hr = "04" Then
                 If vl = "true" Then
                     DLYRPT()
                 End If
@@ -80,7 +80,7 @@ writelog(ex.Message)
         
         Try
             Dim hr As String = Now.ToString("HH")
-            CTSTA.Text = CT
+            CTSTA.Text = CT & vbTab & vbTab & Now.ToString("dd-MMMM-yyyy HH:mm:ss tt fff")
             nt.Text = Now.ToString("dd-MMMM-yyyy hh:mm:ss tt fff") & " Total Seconds of Today is " & ss
         Catch ex As Exception
             writelog(ex.Message)
