@@ -21,6 +21,7 @@ Public Class _Default
     Private LP1 As Boolean = False
     Private dlrpt As Boolean = False
     Private SVRCON As Boolean = False
+    Private SVRCON1 As String
     Public CON5 As New System.Data.OleDb.OleDbConnection("Provider = Microsoft.ACE.OLEDB.12.0;Data Source=" & Server.MapPath("\App_Data\ERR\ERR.accdb") & ";Persist Security Info=False;")
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Try
@@ -89,12 +90,13 @@ writelog(ex.Message)
         Try
         	If CT<> 59 Then
         		SVRCON=False
+        		ERR.Text = SVRCON1
         	End If
             If CT = 59 Then
             	Do Until SVRCON = True
             		 If CON_AM.State <> ConnectionState.Open Then
                     CON_AM.Open()
-                    ERR.Text = "SERVER CONNECTION IS " & CON_AM.State.ToString
+                    SVRCON1 = "SERVER CONNECTION IS " & CON_AM.State.ToString
                     SVRCON= True
                 End If
                Loop
