@@ -50,38 +50,6 @@
       <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Spire.Barcode, Version=1.2.3.21020, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.2.14.5\lib\net20\Spire.Barcode.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Spire.DataExport, Version=3.5.102.4020, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.2.14.5\lib\net20\Spire.DataExport.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Spire.DataExport.ResourceMgr, Version=1.6.71.4020, Culture=neutral, PublicKeyToken=4bc1500157862925, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.2.14.5\lib\net20\Spire.DataExport.ResourceMgr.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Spire.Doc, Version=5.7.81.4020, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.2.14.5\lib\net20\Spire.Doc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Spire.DocViewer.Forms, Version=2.2.48.4020, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.2.14.5\lib\net20\Spire.DocViewer.Forms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Spire.PdfViewer.Forms, Version=2.10.17.4320, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.2.14.5\lib\net20\Spire.PdfViewer.Forms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Spire.Presentation, Version=2.6.26.4020, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.2.14.5\lib\net20\Spire.Presentation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Spire.Spreadsheet, Version=2.1.9.4020, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.Office.2.14.5\lib\net20\Spire.Spreadsheet.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -123,11 +91,12 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\ERR\ERR.accdb" />
     <Content Include="Default.aspx" />
     <Content Include="errgrid.aspx" />
     <Content Include="JUNK\MIX.txt" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Default.aspx.designer.vb">
@@ -216,7 +185,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
-      <FlavorProperties GUID="{349C5851-65DF-11DA-9384-00065B846F21}">
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
@@ -225,7 +194,8 @@
           <IISUrl>http://localhost:62589/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl></CustomServerUrl>
+          <CustomServerUrl>
+          </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>

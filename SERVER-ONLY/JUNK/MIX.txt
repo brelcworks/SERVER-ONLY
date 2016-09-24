@@ -187,3 +187,53 @@
                 smtp.Port = "587"
                 mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
                 smtp.Send(mail)
+                
+                
+                Dim mail As New MailMessage
+                mail.Subject = "DAILY REPORT ON " & Format(Today, "dd-MMM-yyyy")
+                mail.To.Add("pathllk3@gmail.com")
+                mail.CC.Add("brelcworks@YAHOO.COM")
+                Dim MBODY As String = "Dear Sir," & vbCrLf & vbTab & "Today Report is as Given Below !" & vbCrLf & vbCrLf _
+                    & "TOTAL PM COUNT:" & vbTab & vbTab & PM_COUNT & vbCrLf _
+                    & "TOTAL CM COUNT:" & vbTab & vbTab & CM_COUNT & vbCrLf _
+                    & "TOTAL VISIT COUNT:" & vbTab & VS_COUNT & vbCrLf _
+                    & "DETAILS ARE IN THE ATTACHMENT" & vbCrLf _
+                    & "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " & vbCrLf _
+                    & "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " & vbCrLf _
+                    & vbCrLf & "Thanks & Regards" & vbCrLf & "Anjan Paul" & vbCrLf & "For, B & R Electrical Works"
+                mail.Body = MBODY
+                Dim attach As New Attachment(excelfile1)
+                mail.Attachments.Add(attach)
+                Dim smtp As SmtpClient= New SmtpClient
+                smtp.Send(mail)
+                
+                
+                Dim mail As New MailMessage
+                mail.Subject = "RM TRACKER FOR THE MONTH OF " & Now.ToString("MMM") & " - " & Now.ToString("yyyy")
+                mail.To.Add("pathllk3@gmail.com")
+                mail.CC.Add("brelcworks@YAHOO.COM")
+                mail.From = New MailAddress("brelcworks@gmail.com")
+                mail.Body = "Dear Sir," & vbCrLf & vbTab & "Please Find The RM Tracker Sheet in The Attachment." & vbCrLf & vbCrLf & vbCrLf & "Thanks & Regards" & vbCrLf & "Anjan Paul" & vbCrLf & "For, B & R Electrical Works"
+                Dim attach As New Attachment(excelfile1)
+                mail.Attachments.Add(attach)
+                Dim smtp As New SmtpClient("smtp.gmail.com")
+                smtp.EnableSsl = True
+                smtp.Credentials = New System.Net.NetworkCredential("brelcworks", "ratanbose")
+                smtp.Port = "587"
+                mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
+				smtp.Send(mail)
+				
+				
+				Dim mail As New MailMessage
+                mail.Subject = "MONTLY REPORT FOR " & Format(Today, "MMM-yyyy")
+                mail.To.Add("pathllk3@gmail.com")
+                mail.CC.Add("brelcworks@YAHOO.COM")
+                mail.From = New MailAddress("brelcworks@gmail.com")
+                mail.Body = "Dear Sir," & vbCrLf & vbTab & "Please Find The Monthly Report Sheet in The Attachment." & vbCrLf & vbCrLf & vbCrLf & "Thanks & Regards" & vbCrLf & "Anjan Paul" & vbCrLf & "For, B & R Electrical Works"
+                Dim attach As New Attachment(excelfile1)
+                mail.Attachments.Add(attach)
+                Dim smtp As New SmtpClient("smtp.gmail.com")
+                smtp.EnableSsl = True
+                smtp.Credentials = New System.Net.NetworkCredential("brelcworks", "ratanbose")
+                smtp.Port = "587"
+                mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure

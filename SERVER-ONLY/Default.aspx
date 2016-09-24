@@ -30,6 +30,14 @@
                         <br />
                         <asp:Button ID="btn1" runat="server" Text="Redirect" />
                     </div>
+                    <asp:GridView ID="GV1" HeaderStyle-BackColor="#3AC0F2" HeaderStyle-ForeColor="White"
+                        runat="server" AutoGenerateColumns="false">
+                        <Columns>
+                            <asp:BoundField DataField="EID" HeaderText="Id" ItemStyle-Width="30" />
+                            <asp:BoundField DataField="ETIME" HeaderText="ERROR TIME" ItemStyle-Width="200" />
+                            <asp:BoundField DataField="ERR" HeaderText="ERROR FOUND" ItemStyle-Width="500" />
+                        </Columns>
+                    </asp:GridView>
                     <asp:Timer ID="Timer1" runat="server" Interval="1000">
                     </asp:Timer>
                 </ContentTemplate>

@@ -32,7 +32,7 @@ Public Class _Default
             CMD1.CommandText = A
             CMD1.ExecuteNonQuery()
         Catch ex As Exception
-
+writelog(ex.Message)
         End Try
     End Sub
 
@@ -41,65 +41,59 @@ Public Class _Default
         Dim ss1 As Integer = Now.ToString("ss")
         CT = ss1
         ct1 = ss1
-
-        Try
-            If CT = 25 Then
-                ISCOM = False
-                hr_bck()
-            End If
-        Catch ex As Exception
-            EXLERR(Now.ToString, ex.ToString)
-        End Try
+        
+        
         Try
             Dim hr As String = Now.ToString("hh")
-            If hr <> "04" Then
-                WebConfigurationManager.AppSettings.Set("dlrpset", "true")
+            If hr <> "09" Then
+            	WebConfigurationManager.AppSettings.Set("dlrpset", "true")
+            	WebConfigurationManager.AppSettings.Set("rtrckr", "true")
+            	WebConfigurationManager.AppSettings.Set("monrep", "true")
+            	WebConfigurationManager.AppSettings.Set("dlrep", "true")
             End If
             Dim vl As String = WebConfigurationManager.AppSettings("dlrpset")
-            If hr = "04" Then
+            Dim vl1 As String = WebConfigurationManager.AppSettings("rtrckr")
+            Dim vl2 As String = WebConfigurationManager.AppSettings("monrep")
+            Dim vl3 As String = WebConfigurationManager.AppSettings("dlrep")
+            If hr = "09" Then
                 If vl = "true" Then
-                    Dim email As New Thread(Sub() DLYRPT())
-    email.IsBackground = True
-    email.Start()
+                    DLYRPT()
                 End If
-            End If
-        Catch ex As Exception
-            EXLERR(Now.ToString, ex.ToString)
-        End Try
-        Try
-            If CT = 20 Then
-                LP = False
-                rmtrckr()
-            End If
-        Catch ex As Exception
-            EXLERR(Now.ToString, ex.ToString)
-        End Try
-        Try
-            If CT = 45 Then
-                If IsLastDay(Today()) = False Then
+                If vl1 = "true" Then
+                    rmtrckr()
+                End If
+                If vl2="true" Then
+                	If IsLastDay(Today()) = False Then
                     LP1 = False
                     MON_REP()
                 End If
+                End If
+                If vl3="true" Then
+                	ISCOM = False
+                	hr_bck()
+                End If
             End If
         Catch ex As Exception
-            EXLERR(Now.ToString, ex.ToString)
+            writelog(ex.Message)
         End Try
+        
+        
         Try
             Dim hr As String = Now.ToString("HH")
             CTSTA.Text = CT
             nt.Text = Now.ToString("dd-MMMM-yyyy hh:mm:ss tt fff") & " Total Seconds of Today is " & ss
         Catch ex As Exception
-            EXLERR(Now.ToString, ex.ToString)
+            writelog(ex.Message)
         End Try
         Try
-            If ct1 = 59 Then
+            If ct = 59 Then
                 If CON_AM.State <> ConnectionState.Open Then
                     CON_AM.Open()
                     ERR.Text = "SERVER CONNECTION IS " & CON_AM.State.ToString
                 End If
             End If
         Catch ex As Exception
-            EXLERR(Now.ToString, ex.ToString)
+            writelog(ex.Message)
         End Try
     End Sub
     Protected Sub hr_bck()
@@ -198,18 +192,18 @@ Public Class _Default
                     rowIndex3 += 1
                 Next
 
-                Dim X As String = Server.MapPath("\App_Data\BCK\" & Format(Now, "dd-MMMM-yyyy hh-mm-ss-fff tt") & ".xlsx")
+                Dim X As String = Server.MapPath("\App_Data\BCK\" & Format(Now, "dd-MMMM-yyyy hh tt") & ".xlsx")
                 workbook.SaveAs(X)
 
                 Try
-                    Dim url1 As String = "https://dav.box.com/dav/ASP"
+                    Dim url1 As String = "https://dav.box.com/dav/ASP/DAILY BACKUP"
                     Dim port1 As String = "443"
                     If port1 <> "" Then
                         Dim u As New Uri(url1)
                         Dim host As String = u.Host
                         url1 = url1.Replace(host, host & ":" & port1)
                     End If
-                    Dim XY As String = Format(Now, "dd-MMMM-yyyy hh-mm-ss-fff tt")
+                    Dim XY As String = Format(Now, "dd-MMMM-yyyy")
                     url1 = url1.TrimEnd("/"c) & "/" & XY
                     Dim Request1 As System.Net.HttpWebRequest
                     Request1 = CType(System.Net.WebRequest.Create(url1),
@@ -220,7 +214,7 @@ Public Class _Default
                     Response1 = CType(Request1.GetResponse(), System.Net.HttpWebResponse)
                     Response1.Close()
                     Dim fileLength As Long = FileIO.FileSystem.GetFileInfo(X).Length
-                    Dim url As String = "https://dav.box.com/dav/ASP/" & XY
+                    Dim url As String = "https://dav.box.com/dav/ASP/DAILY BACKUP/" & XY
                     Dim port As String = "443"
                     If port <> "" Then
                         Dim u As New Uri(url)
@@ -240,7 +234,7 @@ Public Class _Default
                     Try
                         s = request.GetRequestStream()
                     Catch ex As Exception
-                        EXLERR(Now.ToString, ex.ToString)
+                        writelog(ex.Message)
                     End Try
                     Dim fs As New IO.FileStream(X, IO.FileMode.Open, IO.FileAccess.Read)
                     Dim byteTransferRate As Integer = 1024
@@ -273,18 +267,19 @@ Public Class _Default
                             MsgBox("The file did not upload successfully.")
                         End If
                     Catch ex As Exception
-                        EXLERR(Now.ToString, ex.ToString)
+                        writelog(ex.Message)
                     End Try
                 Catch ex As Exception
-                    EXLERR(Now.ToString, ex.ToString)
+                    writelog(ex.Message)
                 End Try
                 Dim path1 As String = Server.MapPath("/App_Data/BCK/")
-
-                ERR.Text = "OK"
+                WriteLog("HOURLY BACKUP COMPLETED")
+                WebConfigurationManager.AppSettings.Set("dlrep", "false")
+                ERR.Text = "HOURLY BACKUP COMPLETED"
                 ISCOM = True
             Catch ex As Exception
-                EXLERR(Now.ToString, ex.ToString)
-                err_display(ex.ToString)
+                writelog(ex.Message)
+                err_display(ex.Message)
                 ISCOM = False
             End Try
         Loop
@@ -310,7 +305,7 @@ Public Class _Default
 
     Public Sub WriteLog(ByVal strComments As String)
         OpenFile1()
-        streamWriter.WriteLine(vbCrLf & "--------------------" & vbCrLf & "--------------------" & vbCrLf & "Error :" & Format(Now(), "dd-MMMM-yyyy hh:mm:ss:fff tt") & " :- " & strComments)
+        streamWriter.WriteLine("Error : ~!~" & vbTab & Format(Now(), "dd-MMMM-yyyy hh:mm:ss:fff tt") & " :- ~!~" & vbTab & strComments)
         CloseFile()
     End Sub
 
@@ -319,14 +314,19 @@ Public Class _Default
         fileStream.Close()
     End Sub
     Private Sub EXLERR(ByVal ETIME As String, ByVal ERR As String)
-        If CON_AM.State <> ConnectionState.Open Then CON_AM.Open()
-        Dim ICMD As New sqlcommand
+        Try
+            If CON_AM.State <> ConnectionState.Open Then CON_AM.Open()
+            Dim ICMD As New  SqlCommand
         ICMD.CommandType = CommandType.Text
         ICMD.CommandText = "INSERT INTO ERR (ETIME, ERR) VALUES (@ETIME, @ERR)"
         ICMD.Parameters.AddWithValue("@ETIME", ETIME)
         ICMD.Parameters.AddWithValue("@ERR", ERR)
         ICMD.Connection = CON_AM
         ICMD.ExecuteNonQuery()
+        Catch ex As Exception
+        WRITELOG(ex.Message)
+        err_display(ex.Message)
+            End Try
     End Sub
     Private Sub DLYRPT()
         Do Until AD = True
@@ -694,38 +694,15 @@ Public Class _Default
                 If Not System.IO.File.Exists(excelfile1) Then
                     workbook.SaveAs(excelfile1)
                 End If
-
-                Dim mail As New MailMessage
-                mail.Subject = "DAILY REPORT ON " & Format(Today, "dd-MMM-yyyy")
-                mail.To.Add("pathllk3@gmail.com")
-                mail.CC.Add("brelcworks@YAHOO.COM")
-                mail.From = New MailAddress("brelcworks@gmail.com")
-                Dim MBODY As String = "Dear Sir," & vbCrLf & vbTab & "Today Report is as Given Below !" & vbCrLf & vbCrLf _
-                    & "TOTAL PM COUNT:" & vbTab & vbTab & PM_COUNT & vbCrLf _
-                    & "TOTAL CM COUNT:" & vbTab & vbTab & CM_COUNT & vbCrLf _
-                    & "TOTAL VISIT COUNT:" & vbTab & VS_COUNT & vbCrLf _
-                    & "DETAILS ARE IN THE ATTACHMENT" & vbCrLf _
-                    & "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " & vbCrLf _
-                    & "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " & vbCrLf _
-                    & vbCrLf & "Thanks & Regards" & vbCrLf & "Anjan Paul" & vbCrLf & "For, B & R Electrical Works"
-                mail.Body = MBODY
-                Dim attach As New Attachment(excelfile1)
-                mail.Attachments.Add(attach)
-                Dim smtp As New SmtpClient("smtp.gmail.com")
-                smtp.EnableSsl = True
-                smtp.Credentials = New System.Net.NetworkCredential("brelcworks", "ratanbose")
-                smtp.Port = "587"
-                mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
-                smtp.Send(mail)
-                ClientScript.RegisterStartupScript([GetType](), "alert", "alert('Email sent.');", True)
-                EXLERR(Now.ToString, "DAILY REPORT SENT")
+				FUPLOAD(excelfile1,"DAILY REPORT")
+                WriteLog("Daily Report Sent")
                 DLRPTLBL.Text = "DAILY REPORT SENT"
                 WebConfigurationManager.AppSettings.Set("dlrpset", "false")
                 AD = True
             Catch ex As Exception
                 AD = False
-                MsgBox(ex.ToString)
-                err_display(ex.ToString)
+                WriteLog(ex.Message)
+                err_display(ex.Message)
             End Try
         Loop
     End Sub
@@ -881,27 +858,16 @@ Public Class _Default
                 xlWorkSheet.Range("a1", "AK1").Style.Fill.BackgroundColor = XLColor.Turquoise
                 Dim excelfile1 As String = Server.MapPath("\App_Data\DATA\" & "RM TRACKER" & Format(Today, "dd-MMM-yyyy") & ".xlsx")
                 workbook.SaveAs(excelfile1)
-                Dim mail As New MailMessage
-                mail.Subject = "RM TRACKER FOR THE MONTH OF " & Now.ToString("MMM") & " - " & Now.ToString("yyyy")
-                mail.To.Add("pathllk3@gmail.com")
-                mail.CC.Add("brelcworks@YAHOO.COM")
-                mail.From = New MailAddress("brelcworks@gmail.com")
-                mail.Body = "Dear Sir," & vbCrLf & vbTab & "Please Find The RM Tracker Sheet in The Attachment." & vbCrLf & vbCrLf & vbCrLf & "Thanks & Regards" & vbCrLf & "Anjan Paul" & vbCrLf & "For, B & R Electrical Works"
-                Dim attach As New Attachment(excelfile1)
-                mail.Attachments.Add(attach)
-                Dim smtp As New SmtpClient("smtp.gmail.com")
-                smtp.EnableSsl = True
-                smtp.Credentials = New System.Net.NetworkCredential("brelcworks", "ratanbose")
-                smtp.Port = "587"
-                mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
-				smtp.Send(mail)
-                EXLERR(Now.ToString, "RM TRACKER SENT")
+                FUPLOAD(excelfile1,"RM TRACKER")
+                
+                WriteLog("RM Tracker Sent")
+                WebConfigurationManager.AppSettings.Set("rtrckr", "false")
                 ERR.Text = "RM TRACKER SENT"
                 LP = True
             Catch ex As Exception
                 LP = False
-                EXLERR(Now.ToString, ex.ToString)
-                err_display(ex.ToString)
+                writelog(ex.Message)
+                err_display(ex.Message)
             End Try
         Loop
     End Sub
@@ -1274,28 +1240,16 @@ Public Class _Default
                 xlWorkSheet.Range("a1", xlWorkSheet.LastColumnUsed.ColumnLetter & xlWorkSheet.LastRowUsed.RowNumber + 1).Style.Border.OutsideBorderColor = XLColor.TractorRed
                 Dim excelfile1 As String = Server.MapPath("\App_Data\DATA\" & "MONTHLY REPORT FOR " & Format(Today, "MMM-yyyy") & ".xlsx")
                 workbook.SaveAs(excelfile1)
-
-                Dim rng = xlWorkSheet.RangeUsed
-                Dim mail As New MailMessage
-                mail.Subject = "MONTLY REPORT FOR " & Format(Today, "MMM-yyyy")
-                mail.To.Add("pathllk3@gmail.com")
-                mail.CC.Add("brelcworks@YAHOO.COM")
-                mail.From = New MailAddress("brelcworks@gmail.com")
-                mail.Body = "Dear Sir," & vbCrLf & vbTab & "Please Find The Monthly Report Sheet in The Attachment." & vbCrLf & vbCrLf & vbCrLf & "Thanks & Regards" & vbCrLf & "Anjan Paul" & vbCrLf & "For, B & R Electrical Works"
-                Dim attach As New Attachment(excelfile1)
-                mail.Attachments.Add(attach)
-                Dim smtp As New SmtpClient("smtp.gmail.com")
-                smtp.EnableSsl = True
-                smtp.Credentials = New System.Net.NetworkCredential("brelcworks", "ratanbose")
-                smtp.Port = "587"
-                mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
-
+				FUPLOAD(excelfile1,"MONTHLY REPORT")
+				Dim rng = xlWorkSheet.RangeUsed
+				WebConfigurationManager.AppSettings.Set("monrep", "false")
+                writelog("MONTHLY REPORT SENT")
                 ERR.Text = "MONTHLY REPORT SENT"
                 LP1 = True
             Catch ex As Exception
                 LP1 = False
-                EXLERR(Now.ToString, ex.ToString)
-                err_display(ex.ToString)
+                writelog(ex.Message)
+                err_display(ex.Message)
             End Try
         Loop
     End Sub
@@ -1304,10 +1258,96 @@ Public Class _Default
     End Function
     Protected Sub err_display(ByVal msg As String)
         err1.Text = msg
-        ClientScript.RegisterStartupScript([GetType](), "alert", "alert(" & msg & ");", True)
     End Sub
 
     Private Sub btn1_Click(sender As Object, e As EventArgs) Handles btn1.Click
         Response.Redirect("errgrid.aspx")
     End Sub
+    private sub FUPLOAD(byval fl as string, byval dr as string )
+    try
+                    Dim fileLength As Long = FileIO.FileSystem.GetFileInfo(fl).Length
+                    Dim url As String = "https://dav.box.com/dav/ASP/" & dr
+                    Dim port As String = "443"
+                    If port <> "" Then
+                        Dim u As New Uri(url)
+                        Dim host As String = u.Host
+                        url = url.Replace(host, host & ":" & port)
+                    End If
+                    url = url.TrimEnd("/"c) & "/" & Path.GetFileName(fl)
+                    Dim request As HttpWebRequest =
+                    DirectCast(System.Net.HttpWebRequest.Create(url), HttpWebRequest)
+                    request.Credentials = New NetworkCredential("brelcworks@gmail.com", "Indian123")
+                    request.Method = WebRequestMethods.Http.Put
+                    request.ContentLength = fileLength
+                    request.SendChunked = True
+                    request.Headers.Add("Translate: f")
+                    request.AllowWriteStreamBuffering = True
+                    Dim s As IO.Stream = Nothing
+                    Try
+                        s = request.GetRequestStream()
+                    Catch ex As Exception
+                        writelog(ex.Message)
+                    End Try
+                    Dim fs As New IO.FileStream(fl, IO.FileMode.Open, IO.FileAccess.Read)
+                    Dim byteTransferRate As Integer = 1024
+                    Dim bytes(byteTransferRate - 1) As Byte
+                    Dim bytesRead As Integer = 0
+                    Dim totalBytesRead As Long = 0
+                    Do
+                        bytesRead = fs.Read(bytes, 0, bytes.Length)
+                        If bytesRead > 0 Then
+                            totalBytesRead += bytesRead
+                            s.Write(bytes, 0, bytesRead)
+                        End If
+                    Loop While bytesRead > 0
+                    s.Close()
+                    s.Dispose()
+                    s = Nothing
+                    fs.Close()
+                    fs.Dispose()
+                    fs = Nothing
+                    Dim response As HttpWebResponse = Nothing
+                    Try
+                        response = DirectCast(request.GetResponse(), HttpWebResponse)
+                        Dim code As HttpStatusCode = response.StatusCode
+                        response.Close()
+                        response = Nothing
+                        If totalBytesRead = fileLength AndAlso
+                        code = HttpStatusCode.Created Then
+                            Dim d1 As Date = Today
+                        Else
+                            EXLERR(Now.ToString, code.ToString)
+                        End If
+                    Catch ex As Exception
+                        writelog(ex.Message)
+                    End Try
+                Catch ex As Exception
+                    writelog(ex.Message)
+                End Try
+    End Sub
+    Private Function CreateTable() As DataTable
+    Try
+        Dim table As New DataTable()
+        ' Declare DataColumn and DataRow variables.
+        Dim column As DataColumn
+        ' Create new DataColumn, set DataType, ColumnName
+        ' and add to DataTable. 
+        column = New DataColumn()
+        column.DataType = System.Type.[GetType]("System.String")
+        column.ColumnName = "EID"
+        table.Columns.Add(column)
+        ' Create second column.
+        column = New DataColumn()
+        column.DataType = Type.[GetType]("System.String")
+        column.ColumnName = "ETime"
+        table.Columns.Add(column)
+        column = New DataColumn()
+        column.DataType = System.Type.[GetType]("System.String")
+        column.ColumnName = "ERR"
+        table.Columns.Add(column)
+        Return table
+    Catch ex As Exception
+        Throw New Exception(ex.Message)
+    End Try
+End Function
 End Class

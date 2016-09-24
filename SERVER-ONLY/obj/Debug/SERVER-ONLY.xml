@@ -135,6 +135,14 @@ btn1 control.
 Auto-generated field.
 To modify move field declaration from designer file to code-behind file.
 </remarks>
+</member><member name="F:SERVER_ONLY._Default.GV1">
+	<summary>
+GV1 control.
+</summary>
+	<remarks>
+Auto-generated field.
+To modify move field declaration from designer file to code-behind file.
+</remarks>
 </member><member name="F:SERVER_ONLY._Default.Timer1">
 	<summary>
 Timer1 control.
