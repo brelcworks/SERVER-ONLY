@@ -237,3 +237,22 @@
                 smtp.Credentials = New System.Net.NetworkCredential("brelcworks", "ratanbose")
                 smtp.Port = "587"
                 mail.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess Or DeliveryNotificationOptions.OnFailure
+                
+                Try
+        	If CT<> 59 Then
+        		SVRCON=False
+        		ERR.Text = SVRCON1
+        	End If
+            If CT = 59 Then
+            	Do Until SVRCON = True
+            		 If CON_AM.State <> ConnectionState.Open Then
+                    CON_AM.Open()
+                    SVRCON1 = "SERVER CONNECTION IS " & CON_AM.State.ToString
+                    SVRCON= True
+                End If
+               Loop
+            End If
+        Catch ex As Exception
+        	writelog(ex.Message)
+        	SVRCON= False
+        End Try

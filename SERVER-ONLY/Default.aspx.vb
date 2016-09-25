@@ -44,7 +44,6 @@ writelog(ex.Message)
         CT = ss1
         ct1 = ss1
         
-        
         Try
             Dim hr As String = Now.ToString("HH")
             If hr <> "17" Then
@@ -86,24 +85,6 @@ writelog(ex.Message)
             nt.Text = Now.ToString("dd-MMMM-yyyy hh:mm:ss tt fff") & " Total Seconds of Today is " & ss
         Catch ex As Exception
             writelog(ex.Message)
-        End Try
-        Try
-        	If CT<> 59 Then
-        		SVRCON=False
-        		ERR.Text = SVRCON1
-        	End If
-            If CT = 59 Then
-            	Do Until SVRCON = True
-            		 If CON_AM.State <> ConnectionState.Open Then
-                    CON_AM.Open()
-                    SVRCON1 = "SERVER CONNECTION IS " & CON_AM.State.ToString
-                    SVRCON= True
-                End If
-               Loop
-            End If
-        Catch ex As Exception
-        	writelog(ex.Message)
-        	SVRCON= False
         End Try
     End Sub
     Protected Sub hr_bck()
@@ -340,7 +321,8 @@ writelog(ex.Message)
     End Sub
     Private Sub DLYRPT()
         Do Until AD = True
-            Try
+        	Try
+        		If CON_AM.State <> ConnectionState.Open Then CON_AM.Open()
                 Dim PMR_AM_DA As New SqlDataAdapter("SELECT * FROM PMRs", CON_AM)
                 Dim PMR_AM_DT As New DataTable
                 PMR_AM_DA.Fill(PMR_AM_DT)
@@ -718,7 +700,8 @@ writelog(ex.Message)
     End Sub
     Private Sub rmtrckr()
         Do Until LP = True
-            Try
+        	Try
+        		If CON_AM.State <> ConnectionState.Open Then CON_AM.Open()
                 Dim PMR_AM_DA As New SqlDataAdapter("SELECT * FROM PMRs", CON_AM)
                 Dim PMR_AM_DT As New DataTable
                 PMR_AM_DA.Fill(PMR_AM_DT)
